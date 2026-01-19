@@ -13,7 +13,7 @@ with using PostgreSQL, Async Session and Docker
 docker-compose up --build
 ```
 
-
+```
 ├── docker-compose.yml     
 ├── Dockerfile          
 ├── src/                      # Main File
@@ -27,7 +27,7 @@ docker-compose up --build
 │   └── .env                  # File with Environment variables
 ├── requirements.txt          # Requirements
 └── README.md 
-
+```
 
 ## In Steps
 
