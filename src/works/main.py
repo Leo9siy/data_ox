@@ -21,6 +21,6 @@ app.conf.beat_schedule = {
     "make-db-backup-every-night": {
         "task": "src.works.tasks.run_scratch",
         "schedule": crontab(hour=os.getenv("hours", 0), minute=os.getenv("minutes", 0))
-        #"schedule": timedelta(seconds=20) #for every 5 minute
+        #"schedule": timedelta(minutes=10) #for every 5 minute
     }
 }
