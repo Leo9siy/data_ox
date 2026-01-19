@@ -27,14 +27,6 @@ async def scrape(start_page: int = 1, end_page: int = -1, concurrency: int = 20)
 
             page += 1
 
-        # for page in range(start_page, end_page + 1):
-        #     listing_url = f"{SEARCH_URL}?search_type=2&page={page}"
-        #     listing_html = await get_html(session, listing_url)
-        #     links = get_car_links(BASEURL, listing_html)
-        #     if not links:
-        #         break
-        #     car_urls.extend(links)
-
         car_urls = list(dict.fromkeys(car_urls))
 
         async def load_and_parse(url: str) -> dict | None:
