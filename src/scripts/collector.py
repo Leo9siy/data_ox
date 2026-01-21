@@ -34,7 +34,8 @@ def parse_car_page(car_html: str, url: str) -> dict:
     title = title.text if title else ""
 
     price_usd = parser.select_one("div#sidePrice > strong")
-    price_usd = int("".join(re.findall(r'\d', price_usd.text))) if price_usd else ""
+    price_usd = int("".join(re.findall(r'\d', price_usd.text)))\
+        if price_usd else ""
 
     odometer = parser.select_one("div#basicInfoTableMainInfo0 > span")
     odometer = int(odometer.text.split(" ")[0]) * 1000 if odometer else 0
@@ -49,14 +50,16 @@ def parse_car_page(car_html: str, url: str) -> dict:
     image_url = parser.select_one("span.picture img")
     image_url = image_url.get("data-src") if image_url else ""
 
-    images_count = parser.select_one("div#photoSlider > span > span:nth-child(2)")
+    images_count = parser.select_one(
+        "div#photoSlider > span > span:nth-child(2)"
+    )
     images_count = int(images_count.text) if images_count else 0
 
     car_number = parser.select_one("div.car-number.ua")
     car_number = car_number.text if car_number else ""
 
     car_vin = parser.select_one("div.badge-template > span > span")
-    car_vin = car_vin.text if parser.select_one("div.badge-template > span > span") else ""
+    car_vin = car_vin.text if car_vin else ""
 
     return {
         "url": url,

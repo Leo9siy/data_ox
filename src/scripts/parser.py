@@ -10,7 +10,11 @@ BASEURL = "https://auto.ria.com/"
 SEARCH_URL = urljoin(BASEURL, "uk/search/")
 
 
-async def scrape(start_page: int = 1, end_page: int = -1, concurrency: int = 200) -> list[dict]:
+async def scrape(
+        start_page: int = 1,
+        end_page: int = -1,
+        concurrency: int = 200
+) -> list[dict]:
     sem = asyncio.Semaphore(concurrency)
 
     async with aiohttp.ClientSession() as session:
@@ -19,10 +23,12 @@ async def scrape(start_page: int = 1, end_page: int = -1, concurrency: int = 200
         tasks = []
         page = start_page
         while True:
-            if end_page != -1 and page > end_page :
+            if end_page != -1 and page > end_page:
                 break
 
-            tasks.append(asyncio.create_task(process_page(session, page, car_urls)))
+            tasks.append(
+                asyncio.create_task(process_page(session, page, car_urls))
+            )
             page += 1
 
             if len(tasks) >= concurrency:

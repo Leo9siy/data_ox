@@ -15,7 +15,8 @@ async def make_dump():
     backups_dir.mkdir(parents=True, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    backup_file = backups_dir / f"backup_{settings.POSTGRES_NAME}_{timestamp}.dump"
+    backup_file = backups_dir / (f"backup_"
+                                 f"{settings.POSTGRES_NAME}_{timestamp}.dump")
 
     command = [
         "pg_dump",
@@ -38,10 +39,11 @@ async def make_dump():
             env=env
         )
 
-        stdout, stderr = await process.communicate() # for errors
+        stdout, stderr = await process.communicate()  # for errors
 
         if process.returncode == 0:
-            print(f"Dump data '{settings.POSTGRES_NAME}' successful, made file: {backup_file}")
+            print(f"Dump data '{settings.POSTGRES_NAME}' successful,"
+                  f" made file: {backup_file}")
         else:
             print(f"Error while dump: {stderr.decode('utf-8')}")
             sys.exit(1)
