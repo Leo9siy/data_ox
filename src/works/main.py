@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 
 from celery import Celery
 from celery.schedules import crontab
@@ -16,11 +15,16 @@ app = Celery(
 )
 
 app.autodiscover_tasks(["src.works.tasks"])
+app.conf.timezone = 'UTC'
+
+load_dotenv()
+hours = os.getenv("hours", 0)
+minutes = os.getenv("minutes", 0)
 
 app.conf.beat_schedule = {
-    "make-db-backup-every-night": {
+    "make-db-backup-every-3-minutes": {
         "task": "src.works.tasks.run_scratch",
-        "schedule": crontab(hour=os.getenv("hours", 0), minute=os.getenv("minutes", 0))
-        #"schedule": timedelta(minutes=10) #for every 5 minute
+        "schedule": crontab(hour=hours, minute=minutes)
+        # "schedule": crontab(minute="*/3")
     }
 }

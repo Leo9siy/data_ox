@@ -32,3 +32,4 @@ async def get_session() -> AsyncSession:
 async def populate() -> None:
     async with engine.begin() as connect:
         await connect.run_sync(Base.metadata.create_all)
+        print("Successful populated")
